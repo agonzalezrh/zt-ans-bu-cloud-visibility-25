@@ -65,6 +65,32 @@ containers:
         tls_termination: Edge
 
 virtualmachines:
+  - name: "c8000v"
+    image: "c8000v-rhdp-8g"
+    memory: "8G"
+    cores: "4"
+    image_size: "10Gi"
+     tags:
+      - key: "AnsibleGroup"
+        value: "isolated"
+    networks:
+      - default
+    cdroms:
+    - metadata:
+        name: "cisco-config"
+      spec:
+        source:
+          pvc:
+            name: "c8800v-rhdp-config"
+            namespace: cnv-images
+        pvc:
+          accessModes:
+          - ReadWriteMany
+          volumeMode: Block
+          resources:
+            requests:
+              storage: "20Mi"
+
   - name: "control"
     image: "base-zero-aap-2.5-container-ce"
     memory: "16G"
